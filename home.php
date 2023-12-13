@@ -40,6 +40,13 @@
     {
         font-size:14px;
     }
+    .dataTables_filter input {
+        width: 600px !important;
+    }
+    .dataTables_length label,
+    .dataTables_filter label{
+      font-weight: 700 !important;
+    }
   </style>
   <link rel="shortcut icon" href="imgs/logo.gif">
 </head>
@@ -52,8 +59,8 @@
 <body>
   <div class="container-fluid">
     <h4 class="text-center">NOVALICHES <a href="/supplies/dashboard/index.php" style="text-decoration: none;color:black;">DEVELOPMENT</a> COOPERATIVE</h4>
-    <p class="datatable design text-center">SUPPLIES MONITORING</p>
-    <div class="row">
+    <p class="datatable design text-center d-none">SUPPLIES MONITORING</p>
+    <div class="row mt-3">
       <div class="container">
        <!-- <div class="btnAdd">-->
        <!--  <a href="#!" data-id="" data-bs-toggle="modal" data-bs-target="#addMemberModal"   class="btn btn-success btn-sm" >Add</a>-->
@@ -71,9 +78,10 @@
             <th width="20%">Middle Name</th>
             <th width="30%">Branch</th>
             <th width="10%">Registered Date</th>
-            <th width="10%">Giveaway Received</th>
+            <!-- <th width="10%">Giveaway Received</th> -->
+            <th width="10%">Calendar Received</th>
             <th width="10%">Date Received</th>
-            <th width="20%">IP Address</th>
+            <!-- <th width="20%">IP Address</th> -->
             <th>Options</th>
           </thead>
           <tbody>
@@ -108,6 +116,11 @@
           'target':[10],
           'orderable' :false,
         }]
+      });
+      $(".dataTables_filter").find("input").focus();
+
+      $('#updateModal').on('hidden.bs.modal', function () {
+        $(".dataTables_filter").find("input").focus();
       });
     } );
     $(document).on('submit','#addMember',function(e){
@@ -169,16 +182,19 @@
        var giveaway_received= $('#giveaway_receivedField').val();
        var date_received= $('#date_receivedField').val();
        var comp_name= $('#comp_nameField').val();
+       var calendar_received = $("#calendar_receivedField").val();
+       var calendar_date_received = $("#calendar_date_receivedField").val();
 
        var trid= $('#trid').val();
        var id= $('#id').val();
-       if(voters_id != '' && memid != '' && lastname != '' && firstname != '' && middlename != '' && branch != '' && regs_date != '' && giveaway_received != '' && date_received != '' && comp_name != '')
+      //  if(voters_id != '' && memid != '' && lastname != '' && firstname != '' && middlename != '' && branch != '' && regs_date != '' && giveaway_received != '' && date_received != '' && comp_name != '')
+      if(voters_id != '' && memid != '' && lastname != '' && firstname != '' && middlename != '' && branch != '' && regs_date != '' && calendar_received != '' && calendar_date_received != '' && comp_name != '')
        // if(voters_id != '' )
        {
          $.ajax({
            url:"update_member.php",
            type:"post",
-           data:{voters_id:voters_id,memid:memid,lastname:lastname,firstname:firstname,middlename:middlename,branch:branch,regs_date:regs_date,giveaway_received:giveaway_received,date_received:date_received,comp_name:comp_name,id:id},
+           data:{voters_id:voters_id,memid:memid,lastname:lastname,firstname:firstname,middlename:middlename,branch:branch,regs_date:regs_date,giveaway_received:giveaway_received,date_received:date_received,comp_name:comp_name,id:id, calendar_received:calendar_received, calendar_date_received: calendar_date_received, action: "calendar"},
            success:function(data)
            {
              var json = JSON.parse(data);
@@ -190,8 +206,10 @@
               var button =   '<td><a href="javascript:void();" data-id="' +id + '" class="btn btn-success btn-sm editbtn">Update</a></td>';
               var row = table.row("[id='"+trid+"']");
 
-              row.row("[id='" + trid + "']").data([id,voters_id,memid,lastname,firstname,middlename,branch,regs_date,giveaway_received,date_received,comp_name,button]);
+              // row.row("[id='" + trid + "']").data([id,voters_id,memid,lastname,firstname,middlename,branch,regs_date,giveaway_received,date_received,comp_name,button]);
+              row.row("[id='" + trid + "']").data([id,voters_id,memid,lastname,firstname,middlename,branch,regs_date,calendar_received,calendar_date_received,button]);
               $('#updateModal').modal('hide');
+              $(".dataTables_filter").find("input").focus();
             }
             else
             {
@@ -205,6 +223,7 @@
       }
     });
     $('#frmMember').on('click','.editbtn ',function(event){
+      event.preventDefault();
       var table = $('#frmMember').DataTable();
       var trid = $(this).closest('tr').attr('id');
      // console.log(selectedRow);
@@ -227,6 +246,8 @@
        $('#regs_dateField').val(json.regs_date);
        $('#giveaway_receivedField').val(json.giveaway_received);
        $('#date_receivedField').val(json.date_received);
+       $('#calendar_receivedField').val(json.calendar_received);
+       $('#calendar_date_receivedField').val(json.calendar_date_received);
        $('#comp_nameField').val(json.comp_name);
        $('#id').val(id);
        $('#trid').val(trid);
@@ -332,7 +353,7 @@
               <input type="date" class="form-control" id="regs_dateField" name="regs_date" hidden>
             </div>
           </div>
-          <div class="mb-3 row">
+          <!-- <div class="mb-3 row">
             <label for="giveaway_receivedField" class="col-md-3 form-label">Giveaway Received</label>
             <div class="col-md-9">
               <select class="form-control" id="giveaway_receivedField" name="giveaway_received" style="font-size:24px;">
@@ -341,11 +362,27 @@
                 <option value="NO">NO</option>
               </select>
             </div>
-          </div>
+          </div> -->
           <div class="mb-3 row">
+            <label for="calendar_receivedField" class="col-md-3 form-label">Calendar Received</label>
+            <div class="col-md-9">
+              <select class="form-control" id="calendar_receivedField" name="calendar_received" style="font-size:24px;">
+                <option value="---"></option>
+                <option value="YES">YES</option>
+                <option value="NO">NO</option>
+              </select>
+            </div>
+          </div>
+          <!-- <div class="mb-3 row">
             <label for="date_receivedField" class="col-md-3 form-label">Date Recieved</label>
             <div class="col-md-9">
               <input type="date" class="form-control" id="date_receivedField" name="date_received" style="font-size:24px;">
+            </div>
+          </div> -->
+          <div class="mb-3 row">
+            <label for="calendar_date_receivedField" class="col-md-3 form-label">Calendar Date Recieved</label>
+            <div class="col-md-9">
+              <input type="date" class="form-control" id="calendar_date_receivedField" name="calendar_date_received" style="font-size:24px;">
             </div>
           </div>
           <div class="mb-3 row">

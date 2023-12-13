@@ -44,12 +44,14 @@ while($row = mysqli_fetch_assoc($query))
 	$sub_array[] = $row['middlename'];
 	$sub_array[] = $row['branch'];
 	$sub_array[] = $row['regs_date'];
-	$sub_array[] = $row['giveaway_received'];
-	$sub_array[] = $row['date_received'];
-	$sub_array[] = $row['comp_name'];
+	// $sub_array[] = $row['giveaway_received'];
+	// $sub_array[] = $row['date_received'];
+	$sub_array[] = $row['calendar_received'];
+	$sub_array[] = $row['calendar_date_received'];
+	// $sub_array[] = $row['comp_name'];
 
 	// $sub_array[] = '<a href="javascript:void();" data-id="'.$row['id'].'"  class="btn btn-info btn-sm editbtn" >Edit</a>  <a href="javascript:void();" data-id="'.$row['id'].'"  class="btn btn-danger btn-sm deleteBtn" >Delete</a>';
-	$sub_array[] = '<a href="javascript:void();" data-id="'.$row['id'].'" class="btn btn-success btn-sm editbtn" >Update</a>';
+	$sub_array[] = '<a data-id="'.$row['id'].'" class="btn btn-success btn-sm editbtn" >Update</a>';
 	$data[] = $sub_array;
 }
 
