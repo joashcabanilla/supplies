@@ -138,7 +138,6 @@
       var password= $('#addpasswordField').val();
       var isregistered= $('#addisregisteredField').val();
       var count= $('#addcountField').val();
-
         if(voters_id != '' && memid != '' && pbno != '' && lastname != '' && firstname != '' && middlename != '' && bday != '' && membershipdate != '' && status != '' && branch != '' && isregistered != '' && password != '' && count != '')
       // if(voters_id != '' && memid != '' && pbno != '' && lastname != '' && firstname != '' && middlename != '' && bday != '' && membershipdate != '' && status != '' && branch != '' && password != '' && count != '')
       {
@@ -188,7 +187,7 @@
        var trid= $('#trid').val();
        var id= $('#id').val();
       //  if(voters_id != '' && memid != '' && lastname != '' && firstname != '' && middlename != '' && branch != '' && regs_date != '' && giveaway_received != '' && date_received != '' && comp_name != '')
-      if(voters_id != '' && memid != '' && lastname != '' && firstname != '' && middlename != '' && branch != '' && regs_date != '' && calendar_received != '' && calendar_date_received != '' && comp_name != '')
+      if(lastname != '' && firstname != '' && middlename != '' && branch != '' && calendar_received != '' && calendar_date_received != '' && comp_name != '')
        // if(voters_id != '' )
        {
          $.ajax({

@@ -37,7 +37,7 @@ while($row = mysqli_fetch_assoc($query))
 {
 	$sub_array = array();
 	$sub_array[] = $row['id'];
-	$sub_array[] = $row['voters_id'];
+	$sub_array[] = $row['pbno'];
 	$sub_array[] = $row['memid'];
 	$sub_array[] = $row['lastname'];
 	$sub_array[] = $row['firstname'];
