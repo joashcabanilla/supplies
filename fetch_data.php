@@ -10,6 +10,9 @@ if(isset($_POST['search']['value']))
 	$search_value = $_POST['search']['value'];
 	$sql .= " WHERE CONCAT( lastname,  ' ', firstname,  ' ', middlename ) like '%".$search_value."%'";
   $sql .= " OR voters_id like '%".$search_value."%'";
+  $sql .= " OR memid like '%".$search_value."%'";
+  $sql .= " OR pbno like '%".$search_value."%'";
+  $sql .= " OR pbnum like '%".$search_value."%'";
 	//
 	// $sql .= " OR stat like '%".$search_value."%'";
 }
